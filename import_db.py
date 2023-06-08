@@ -77,9 +77,10 @@ class DB_importer:
             )
         return
     
+    # Loads all labels for each action id into a list 
     def load_labels(self):
         labels = []
-        with open("./dataset/mooc_actions.tsv", 'r') as file:
+        with open("./dataset/mooc_action_labels.tsv", 'r') as file:
             lines = file.readlines()
             for line in lines[1:]:
                 values = line.strip().split('\t')
@@ -87,6 +88,7 @@ class DB_importer:
                 labels.append(label)
         return labels
     
+    # Loads all features for each action id into lists
     def load_features(self):
         feature0 = []
         feature1 = []
@@ -106,12 +108,13 @@ class DB_importer:
                 feature3.append(f3)
         return feature0 , feature1 , feature2 , feature3
 
-
+    # Creates all actions for each action id with its attributes
     def create_all_actions(self , filepath):
         labels = self.load_labels()
         feature0 , feature1 , feature2 , feature3 = self.load_features()
         with open(filepath, 'r') as file:
             lines = file.readlines()
+            # starting from 1 because 0 contains the column name string
             for i in range(1 , 100):
                 print("Creating action " + str(i))
                 line = lines[i]
@@ -127,12 +130,13 @@ class DB_importer:
                 f3 = feature3[i]
                 self.create_action(action_id ,user_id , target_id ,timestamp , label , f0 , f1 , f2 , f3)
     
+    # creates an action in the db with its corresponding attributes
     def create_action(self, action_id, user_id, target_id, timestamp , label , f0 , f1 , f2 , f3):
         self.driver.execute_query(
                 query_="""MATCH (u:USER{USERID :""" + str(user_id) + """}) , (t:TARGET{TARGETID:""" + str(target_id) + """})
                         CREATE (u) - [:TAKE_ACTION{timestamp:""" + str(timestamp) + """ , ACTIONID:""" + str(action_id) + """ 
-                        , LABEL:""" + str(label) + """, FEATURE0:""" + str(f0) + """ , FEATURE1:""" + str(f1) + """
-                        , FEATURE2:""" + str(f2)+ """ , FEATURE3:""" + str(f3) + """  }] -> (t)""",
+                        , LABEL:""" + str(label)+ """, FEATURE0:""" + str(f0) + """ , FEATURE1:""" + str(f1)+ """
+                        , FEATURE2:""" + str(f2) + """ , FEATURE3:""" + str(f3) + """  }] -> (t)""",
         )
         return
     
@@ -154,6 +158,7 @@ class DB_importer:
         )
         return
     
+    # closes the noe4j connection
     def close(self):
         self.driver.close()
 
@@ -170,6 +175,7 @@ if __name__ == "__main__":
     # delete everything before importing
     importer.delete_all_nodes_in_db()
     print("Purge completed")
+    # import all into db
     importer.import_into_db(all_users , all_targets)
     print("Import completed succesfully")
     importer.close()
