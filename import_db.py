@@ -115,7 +115,7 @@ class DB_importer:
         with open(filepath, 'r') as file:
             lines = file.readlines()
             # starting from 1 because 0 contains the column name string
-            for i in range(1 , 100):
+            for i in range(1 , len(lines) - 1):
                 print("Creating action " + str(i))
                 line = lines[i]
                 values = line.strip().split('\t')
