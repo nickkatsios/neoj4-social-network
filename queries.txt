@@ -1,0 +1,47 @@
+----------- 1 -----------
+Graph produced by query
+
+MATCH (u:USER)-[a:TAKE_ACTION]->(t:TARGET)
+WHERE u.USERID > 1 AND u.USERID < 30
+RETURN a , t , u
+
+BENCHMARK: Started streaming 2444 records after 1 ms and completed after 8 ms.
+
+---------- 2 ---------
+Users
+
+MATCH (u:USER)
+RETURN count(u) as user_count
+
+BENCHMARK: Started streaming 1 records in less than 1 ms and completed after 1 ms.
+
+Targets
+
+MATCH (t:TARGET)
+RETURN count(t) as target_count
+
+BENCHMARK: Started streaming 1 records in less than 1 ms and completed after 1 ms.
+
+Actions
+
+MATCH ()-[a:TAKE_ACTION]->()
+RETURN count(a) as action_count
+
+BENCHMARK: Started streaming 1 records in less than 1 ms and completed after 1 ms.
+
+----------- 3 -------------
+For USERID = 1
+
+To return the nodes (see output 3)
+
+MATCH (u:USER)-[a:TAKE_ACTION]->(t:TARGET)
+WHERE u.USERID = 1
+RETURN a , t , u
+
+To return the TARGETIDs , ACTIONIDs
+
+MATCH (u:USER)-[a:TAKE_ACTION]->(t:TARGET)
+WHERE u.USERID = 1
+RETURN t.TARGETID , a.ACTIONID 
+
+BENCHMARK: Started streaming 26 records after 1 ms and completed after 9 ms.
