@@ -45,3 +45,52 @@ WHERE u.USERID = 1
 RETURN t.TARGETID , a.ACTIONID 
 
 BENCHMARK: Started streaming 26 records after 1 ms and completed after 9 ms.
+
+----------- 4 -------------
+Table Produced By Query
+
+MATCH (u:USER)-[a:TAKE_ACTION]->()
+RETURN u.USERID ,COUNT(a)
+
+BENCHMARK: Started streaming 7046 records after 3 ms and completed after 96 ms, displaying first 1000 rows.
+
+----------- 5 -------------
+Table Produced By Query
+
+MATCH (u:USER)-[]->(t:TARGET)
+RETURN t.TARGETID ,COUNT(DISTINCT u)
+
+Note: We suppose that we count unique users, no duplicates (DISTINCT)
+
+BENCHMARK: Started streaming 96 records in less than 1 ms and completed after 130 ms.
+
+----------- 6 -------------
+Table Produced By Query
+
+MATCH (u:USER)-[a:TAKE_ACTION]->()
+WITH u, COUNT(a) AS actionCount
+RETURN AVG(actionCount)
+
+BENCHMARK: Started streaming 1 records after 1 ms and completed after 156 ms.
+
+----------- 7 -------------
+Table Produced By Query
+
+MATCH (u:USER)-[a:TAKE_ACTION]->(t:TARGET)
+WHERE a.FEATURE2>0
+RETURN u.USERID, t.TARGETID
+
+Note: There could be duplicate records (ex. USERID 0 TARGET ID 0),
+      because there could be multiple actions with positive FEATURE2
+      between a user and a target.
+
+BENCHMARK: Started streaming 287763 records in less than 1 ms and completed after 336 ms, displaying first 1000 rows.
+
+----------- 8 -------------
+Table Produced By Query
+
+MATCH ()-[a:TAKE_ACTION]->(t:TARGET)
+WHERE a.LABEL=1
+RETURN t.TARGETID, count(a) 
+
+BENCHMARK: Started streaming 92 records after 1 ms and completed after 173 ms.
