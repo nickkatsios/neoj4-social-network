@@ -34,7 +34,7 @@ Download Neo4j and Setup a DB
 
 3. Run the import_db.py script (it will take some time if you load all the data... approximately an hour using a modern laptop)
 
-4. In the console/browser of the DB you created on Neo4j type any query you want
+4. In the console/browser in the Desktop app, of the DB you created on Neo4j type any query you want
 
 
 A brief overview of what each function implements.
