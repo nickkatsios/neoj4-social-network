@@ -12,7 +12,7 @@ The program was developed and tested on an **Ubuntu 22.04** and a **Windows 11**
 
 ### [**Description**](#) <a name="descr"></a>
 
-This project simulates how data could be stored and retrieved from a graph database, in a socieal-network context (ex. FaceBook,BeReal.). The data are retrieved from the Stanford Large Network Dataset Collection (https://snap.stanford.edu/data/#socnets) and loaded in the Neo4j DB using Python.
+This project simulates how data could be stored and retrieved from a graph database, in a social-network context (ex. FaceBook,BeReal.). The data are retrieved from the Stanford Large Network Dataset Collection (https://snap.stanford.edu/data/#socnets) and loaded in the Neo4j DB using Python.
 
 ### [**Installing & Setup**](#) <a name="inst"></a>
 
