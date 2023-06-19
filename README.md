@@ -3,6 +3,9 @@ A simulation of a social network using Neo4j DBMS.
 <br />
 The program was developed and tested on an **Ubuntu 22.04** and a **Windows 11** machine.
 
+## DB Preview
+<img src="https://github.com/nickkatsios/neoj4-social-network/blob/main/outputs/graph.png" height="500" width="500"/>
+
 ### [Contents](#)
 1. [**Description**](#descr)
 2. [Installing & Setup](#inst)
